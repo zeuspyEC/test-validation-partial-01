@@ -162,4 +162,20 @@ class BaggageFeeCalculatorTest {
         assertEquals(30.0, fee, 0.001,
                 "23 kg es el límite exacto: no aplica recargo, solo tarifa base $30.00");
     }
+    /*
+    // Caso 9: VIP con maleta de exceso — beneficio NO aplica
+    */ 
+    @Test
+    @DisplayName("Debería cobrar $80.00 por una maleta de 25 kg de un pasajero VIP (exceso invalida beneficio)")
+    void shouldCharge80_whenVipPassengerHasOverweightBag() {
+        // Arrange
+        when(passengerService.isVip(PASSENGER_ID)).thenReturn(true);
+
+        // Act
+        double fee = calculator.calculateFee(25.0, 1, PASSENGER_ID);
+
+        // Assert
+        assertEquals(80.0, fee, 0.001,
+                "Si la maleta pesa más de 23 kg, el beneficio VIP no aplica: $30 + $50 = $80.00");
+    }
 }
