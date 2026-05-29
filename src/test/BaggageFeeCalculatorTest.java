@@ -90,6 +90,19 @@ class BaggageFeeCalculatorTest {
         assertEquals(30.0, fee, 0.001,
                 "VIP: primera maleta gratis ($0) + segunda maleta normal ($30) = $30.00");
     }
-    
+    /*
+    // Caso 5 a: Excepción — peso igual a cero
+    */ 
+    @Test
+    @DisplayName("Debería lanzar IllegalArgumentException cuando el peso es 0")
+    void shouldThrowException_whenWeightIsZero() {
+        // Arrange / Act / Assert
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> calculator.calculateFee(0.0, 1, PASSENGER_ID),
+                "Peso igual a cero debe lanzar IllegalArgumentException"
+        );
+        assertEquals("Parámetros de equipaje inválidos", exception.getMessage());
+    }
 
 }
