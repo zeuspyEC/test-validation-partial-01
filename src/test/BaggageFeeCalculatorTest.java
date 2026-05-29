@@ -42,4 +42,20 @@ class BaggageFeeCalculatorTest {
         assertEquals(30.0, fee, 0.001,
                 "Una maleta estándar sin exceso de peso debe costar $30.00");
     }
+    /*
+    // Caso 2: Exceso de peso — pasajero regular, maleta > 23 kg
+    */ 
+    @Test
+    @DisplayName("Debería cobrar $80.00 por una maleta de 25 kg de un pasajero regular")
+    void shouldCharge80_whenOverweightBagAndRegularPassenger() {
+        // Arrange
+        when(passengerService.isVip(PASSENGER_ID)).thenReturn(false);
+
+        // Act
+        double fee = calculator.calculateFee(25.0, 1, PASSENGER_ID);
+
+        // Assert
+        assertEquals(80.0, fee, 0.001,
+                "Tarifa base $30 + recargo $50 por exceso = $80.00");
+    }
 }
