@@ -118,6 +118,21 @@ class BaggageFeeCalculatorTest {
         );
         assertEquals("Parámetros de equipaje inválidos", exception.getMessage());
     }
+    /*
+    // Caso 6: Excepción — bagCount menor que 1
+    */ 
+    @Test
+    @DisplayName("Debería lanzar IllegalArgumentException cuando bagCount es 0")
+    void shouldThrowException_whenBagCountIsZero() {
+        // Arrange / Act / Assert
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> calculator.calculateFee(20.0, 0, PASSENGER_ID),
+                "bagCount igual a cero debe lanzar IllegalArgumentException"
+        );
+        assertEquals("Parámetros de equipaje inválidos", exception.getMessage());
+    }
+
 
 
 }
