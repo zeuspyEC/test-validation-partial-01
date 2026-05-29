@@ -58,4 +58,20 @@ class BaggageFeeCalculatorTest {
         assertEquals(80.0, fee, 0.001,
                 "Tarifa base $30 + recargo $50 por exceso = $80.00");
     }
+    /*
+    // Caso 3: Beneficio VIP — 1 maleta dentro del límite → gratis
+    */ 
+    @Test
+    @DisplayName("Debería cobrar $0.00 por una maleta de 15 kg de un pasajero VIP")
+    void shouldCharge0_whenSingleBagWithinLimitAndVipPassenger() {
+        // Arrange
+        when(passengerService.isVip(PASSENGER_ID)).thenReturn(true);
+
+        // Act
+        double fee = calculator.calculateFee(15.0, 1, PASSENGER_ID);
+
+        // Assert
+        assertEquals(0.0, fee, 0.001,
+                "La primera maleta de un VIP sin exceso de peso debe ser gratis ($0.00)");
+    }
 }
