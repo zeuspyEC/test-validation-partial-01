@@ -74,4 +74,22 @@ class BaggageFeeCalculatorTest {
         assertEquals(0.0, fee, 0.001,
                 "La primera maleta de un VIP sin exceso de peso debe ser gratis ($0.00)");
     }
+    /*
+    // Caso 4: Caso límite VIP — 2 maletas, 1ra gratis, 2da con cargo
+    */ 
+    @Test
+    @DisplayName("Debería cobrar $30.00 por dos maletas de 15 kg de un pasajero VIP (primera gratis)")
+    void shouldCharge30_whenTwoBagsWithinLimitAndVipPassenger() {
+        // Arrange
+        when(passengerService.isVip(PASSENGER_ID)).thenReturn(true);
+
+        // Act
+        double fee = calculator.calculateFee(15.0, 2, PASSENGER_ID);
+
+        // Assert
+        assertEquals(30.0, fee, 0.001,
+                "VIP: primera maleta gratis ($0) + segunda maleta normal ($30) = $30.00");
+    }
+    
+
 }
