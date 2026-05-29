@@ -34,7 +34,38 @@ public class BaggageFeeCalculator {
      * @throws IllegalArgumentException si los parámetros no cumplen las restricciones
      */
     public double calculateFee(double weight, int bagCount, Long passengerId) {
-        // TODO: Implementar lógica de negocio y validación de excepciones
-        return 0.0;
+        if (passengerId == null || weight <= 0 || bagCount < 1) {
+            throw new IllegalArgumentException("Parámetros de equipaje inválidos");
+        }
+        /*#	Caso	Entrada	Resultado esperado:
+        1	Equipaje estándar	1 maleta, 20 kg, pasajero regular	$30.00
+        2	Exceso de peso	1 maleta, 25 kg, pasajero regular	$80.00
+        3	Beneficio VIP	1 maleta, 15 kg, pasajero VIP	$0.00 (requiere Mockito)
+        4	Caso límite VIP	2 maletas, 15 kg c/u, pasajero VIP	$30.00 (1ra gratis, 2da cobro normal)
+        5	Validación de excepción	weight = 0 o negativo	IllegalArgumentException */
+        
+        final double baseFeePerBag = 30.0;
+        final double overweightFeePerBag = 50.0;
+        final double overweightLimitKg = 23.0;
+
+        boolean vipPassenger = passengerService.isVip(passengerId);
+        double totalFee = 0.0;
+
+        for (int bagIndex = 0; bagIndex < bagCount; bagIndex++) {
+            double bagFee = baseFeePerBag;
+
+            if (weight > overweightLimitKg) {
+                bagFee += overweightFeePerBag;
+            }
+
+            if (vipPassenger && bagIndex == 0 && weight <= overweightLimitKg) {
+                bagFee = 0.0;
+            }
+
+            totalFee += bagFee;
+        }
+
+        return totalFee;
+
     }
 }
