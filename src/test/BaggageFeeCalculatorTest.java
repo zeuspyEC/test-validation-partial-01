@@ -104,5 +104,20 @@ class BaggageFeeCalculatorTest {
         );
         assertEquals("Parámetros de equipaje inválidos", exception.getMessage());
     }
+    /*
+    // Caso 5 b: Excepción — peso negativo
+    */ 
+    @Test
+    @DisplayName("Debería lanzar IllegalArgumentException cuando el peso es negativo")
+    void shouldThrowException_whenWeightIsNegative() {
+        // Arrange / Act / Assert
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> calculator.calculateFee(-5.0, 1, PASSENGER_ID),
+                "Peso negativo debe lanzar IllegalArgumentException"
+        );
+        assertEquals("Parámetros de equipaje inválidos", exception.getMessage());
+    }
+
 
 }
