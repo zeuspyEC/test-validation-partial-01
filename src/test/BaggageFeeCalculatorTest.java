@@ -146,4 +146,20 @@ class BaggageFeeCalculatorTest {
         );
         assertEquals("Parámetros de equipaje inválidos", exception.getMessage());
     }
+    /*
+    // Caso 8: Caso borde — peso exactamente en el límite (23 kg)
+    */ 
+    @Test
+    @DisplayName("Debería cobrar $30.00 por una maleta de exactamente 23 kg (sin recargo)")
+    void shouldCharge30_whenWeightIsExactlyAtLimit() {
+        // Arrange
+        when(passengerService.isVip(PASSENGER_ID)).thenReturn(false);
+
+        // Act
+        double fee = calculator.calculateFee(23.0, 1, PASSENGER_ID);
+
+        // Assert
+        assertEquals(30.0, fee, 0.001,
+                "23 kg es el límite exacto: no aplica recargo, solo tarifa base $30.00");
+    }
 }
