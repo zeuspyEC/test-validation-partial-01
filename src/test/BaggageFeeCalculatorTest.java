@@ -132,7 +132,18 @@ class BaggageFeeCalculatorTest {
         );
         assertEquals("Parámetros de equipaje inválidos", exception.getMessage());
     }
-
-
-
+    /*
+    // Caso 7: Excepción — passengerId nulo
+    */ 
+    @Test
+    @DisplayName("Debería lanzar IllegalArgumentException cuando passengerId es null")
+    void shouldThrowException_whenPassengerIdIsNull() {
+        // Arrange / Act / Assert
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> calculator.calculateFee(20.0, 1, null),
+                "passengerId nulo debe lanzar IllegalArgumentException"
+        );
+        assertEquals("Parámetros de equipaje inválidos", exception.getMessage());
+    }
 }
